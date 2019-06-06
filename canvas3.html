@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html> 
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas with input</title> 
+  </head>
+  <body>
+    
+      <canvas id="mycanvas" style="max-height: 394px; max-width: 394px;"></canvas>
+    <br>
+    <a href="#" class="button" id="download">Download</a>
+    <br>
+      
+      <input id="input-box" type="text" value=""/>
+      <label for="input-box">Host Name</label>
+
+      <input id="date-input-box" type="text" value=""/>
+      <label for="date-input-box">Date</label>
+      <input id="time-input-box" type="text" value=""/>
+      <label for="time-input-box">Time</label>
+    
+    <script>
+    var hostNameText = "Please Join HOST NAME For";
+    var canvas = document.getElementById("mycanvas");
+    var ctx = canvas.getContext("2d");
+    var background = new Image();
+
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+    window.addEventListener('load', DrawPlaceholder)
+
+    function DrawPlaceholder() {
+        background.onload = function() {
+            DrawBackground(background);
+            DrawTextHost();
+            DynamicTextHost(background);
+        };
+        background.src = "./floralInvite.jpg";
+    }
+
+    function DrawBackground(background) {
+        ctx.drawImage(background, 0, 0);
+    }
+
+    function DrawTextHost() {
+        ctx.textBaseline = 'middle';
+        ctx.font = "40px Arial";
+        ctx.textAlign = 'center';
+        ctx.fillText(hostNameText, canvas.width / 2, 525);
+    }
+
+    
+    function DynamicTextHost(background) {
+        document.getElementById("input-box").addEventListener("keyup", function(){
+            DrawBackground(background);
+            hostNameText = "Please Join " + this.value + " For";
+            ctx.textAlign = 'center';
+            ctx.fillText(hostNameText, canvas.width / 2, 525, 750);
+        });
+    }
+
+    function convertToImage() {
+	window.open(canvas.toDataURL('jpg'));
+}
+document.getElementById('download').onclick = function download() {
+		convertToImage();
+};
+    
+
+
+    
+    </script>
+  </body>
+ 
+</html>
